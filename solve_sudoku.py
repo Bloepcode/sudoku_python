@@ -117,15 +117,15 @@ def getBoard():
 # Start the program
 if __name__ == "__main__":
     print(
-        f"{Fore.RED}[ 0 ]{Style.RESET_ALL} Getting sudoku from in.txt.", end="\r")
+        f"[ {Fore.YELLOW}0{Style.RESET_ALL} ] Getting sudoku from in.txt.", end="\r")
     orig_grid = getBoard()
-    print(f"{Fore.GREEN}[ x ]{Style.RESET_ALL}")
-    print(f"{Fore.RED}[ 0 ]{Style.RESET_ALL} Solving Sudoku.", end="\r")
+    print(f"[ {Fore.GREEN}1{Style.RESET_ALL} ]")
+    print(f"[ {Fore.YELLOW}0{Style.RESET_ALL} ] Solving Sudoku.", end="\r")
     grid = solveSudoku(copy.deepcopy(orig_grid))
-    print(f"{Fore.GREEN}[ x ]{Style.RESET_ALL}")
 
     with open("out.txt", "w") as f:
         if grid != False:
+            print(f"[ {Fore.GREEN}1{Style.RESET_ALL} ]")
             print("Successfully solved the sudoku, output is in out.txt!")
             f.write("\nOriginal:\n")
             f.write(generateBoard(orig_grid))
@@ -135,5 +135,6 @@ if __name__ == "__main__":
 
             f.write("\nBacktracks: {}\n".format(backtracks))
         else:
+            print(f"[ {Fore.RED}x{Style.RESET_ALL} ]")
             print("Could not solve this sudoku!")
             f.write("Could not solve sudoku!")
