@@ -7,7 +7,7 @@ from colorama import Fore, Back, Style
 backtracks = 0
 
 
-def generateBoard(grid):
+def generate_board(grid):
     """
     Generates a user friendly board in text to save to a file or print to the console.
     """
@@ -47,7 +47,7 @@ def generateBoard(grid):
     return text
 
 
-def findNextCellToFill(grid):
+def find_next_cell_to_fill(grid):
     """
     Find next empty cell to fill on the Sudoku grid.
     """
@@ -63,19 +63,19 @@ def findNextCellToFill(grid):
 # Check if the setting (i, j) square to e is valid
 
 
-def isValid(grid, i, j, e):
+def is_valid(grid, i, j, e):
     """
     Check if e on position i, j is valid
     """
 
-    rowOk = all([e != grid[i][x] for x in range(0, 9)])
-    if rowOk:
-        columnOk = all([e != grid[x][j] for x in range(0, 9)])
-        if columnOk:
+    row_ok = all([e != grid[i][x] for x in range(0, 9)])
+    if row_ok:
+        column_ok = all([e != grid[x][j] for x in range(0, 9)])
+        if column_ok:
             # Finding top-left x, y co-ordinates of section that contains i, j
-            secTopX, secTopY = 3 * (i//3), 3 * (j//3)
-            for x in range(secTopX, secTopX+3):
-                for y in range(secTopY, secTopY+3):
+            sec_top_x, sec_top_y = 3 * (i//3), 3 * (j//3)
+            for x in range(sec_top_x, sec_top_x+3):
+                for y in range(sec_top_y, sec_top_y+3):
                     if grid[x][y] == e:
                         return False
 
@@ -84,7 +84,7 @@ def isValid(grid, i, j, e):
     return False
 
 
-def solveSudoku(grid, i=0, j=0):
+def solve_sudoku(grid, i=0, j=0):
     """
     Fills in the missing squares by brute-forcing the sudoku.
     """
@@ -92,16 +92,16 @@ def solveSudoku(grid, i=0, j=0):
     global backtracks
 
     # Find next grid cell to fill
-    i, j = findNextCellToFill(grid)
+    i, j = find_next_cell_to_fill(grid)
 
     if i == -1:
         return True
 
     for e in range(1, 10):
         # Try different values in i, j position
-        if isValid(grid, i, j, e):
+        if is_valid(grid, i, j, e):
             grid[i][j] = e
-            if solveSudoku(grid, i, j) != False:
+            if solve_sudoku(grid, i, j) != False:
                 return grid
 
             backtracks += 1
@@ -111,7 +111,7 @@ def solveSudoku(grid, i=0, j=0):
     return False
 
 
-def getBoard():
+def get_board():
     """
     Get the sudoku from the in.txt file.
     """
@@ -132,20 +132,20 @@ def getBoard():
 if __name__ == "__main__":
     print(
         f"[ {Fore.YELLOW}0{Style.RESET_ALL} ] Getting sudoku from in.txt.", end="\r")
-    orig_grid = getBoard()
+    orig_grid = get_board()
     print(f"[ {Fore.GREEN}1{Style.RESET_ALL} ]")
     print(f"[ {Fore.YELLOW}0{Style.RESET_ALL} ] Solving Sudoku.", end="\r")
-    grid = solveSudoku(copy.deepcopy(orig_grid))
+    grid = solve_sudoku(copy.deepcopy(orig_grid))
 
     with open("out.txt", "w") as f:
         if grid != False:
             print(f"[ {Fore.GREEN}1{Style.RESET_ALL} ]")
             print("Successfully solved the sudoku, output is in out.txt!")
             f.write("\nOriginal:\n")
-            f.write(generateBoard(orig_grid))
+            f.write(generate_board(orig_grid))
 
             f.write("\n\nSolved:\n")
-            f.write(generateBoard(grid))
+            f.write(generate_board(grid))
 
             f.write("\nBacktracks: {}\n".format(backtracks))
         else:
