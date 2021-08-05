@@ -1,4 +1,4 @@
-# A python implementation of algoritm X
+# A sudoku solver in python.
 
 
 import copy
