@@ -6,10 +6,12 @@ from colorama import Fore, Back, Style
 
 backtracks = 0
 
-# Generates a user friendly board
-
 
 def generateBoard(grid):
+    """
+    Generates a user friendly board in text to save to a file or print to the console.
+    """
+
     text = ""
 
     for x in range(0, 11):
@@ -45,8 +47,11 @@ def generateBoard(grid):
     return text
 
 
-# Find next empty cell to fill on the Sudoku grid.
 def findNextCellToFill(grid):
+    """
+    Find next empty cell to fill on the Sudoku grid.
+    """
+
     # Look for an unfilled grid location
     for x in range(0, 9):
         for y in range(0, 9):
@@ -59,6 +64,10 @@ def findNextCellToFill(grid):
 
 
 def isValid(grid, i, j, e):
+    """
+    Check if e on position i, j is valid
+    """
+
     rowOk = all([e != grid[i][x] for x in range(0, 9)])
     if rowOk:
         columnOk = all([e != grid[x][j] for x in range(0, 9)])
@@ -75,8 +84,10 @@ def isValid(grid, i, j, e):
     return False
 
 
-# Fills in the missing squares by brute-forcing the sudoku.
 def solveSudoku(grid, i=0, j=0):
+    """
+    Fills in the missing squares by brute-forcing the sudoku.
+    """
 
     global backtracks
 
@@ -100,8 +111,11 @@ def solveSudoku(grid, i=0, j=0):
     return False
 
 
-# Gets the sudoku from in "in.txt" file
 def getBoard():
+    """
+    Get the sudoku from the in.txt file.
+    """
+
     with open("in.txt", "r") as f:
         grid = []
         lines = f.readlines()
